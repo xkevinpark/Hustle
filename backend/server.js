@@ -6,7 +6,7 @@ const path = require('path');
 require('dotenv').config({path: 'backend/.env' })
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 // cors middleware 
 app.use(cors());
@@ -31,7 +31,7 @@ connection.once('open', () => {
 const exercisesRouter = require('./routes/exercises');
 const usersRouter = require('./routes/users');
 
-// use routers
+// server API endpoints
 app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
 

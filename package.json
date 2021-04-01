@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node server/server.js",
+    "start": "nodemon --exec babel-node backend/server.js",
     "dev": "webpack serve --config ./webpack.config.js --mode development"
   },
   "keywords": [],

@@ -43,15 +43,18 @@ export default class ExercisesList extends Component {
   }
 
   exerciseList() {
-    return this.state.exercises.map(currentexercise => {
-      return <Exercise exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id}/>;
-    })
+    const exercises = this.state.exercises;
+    const exerList = [];
+    for(let i = 0; i < exercises.length; i++){
+      exerList.push(<Exercise exercise={exercises[i]} deleteExercise={this.deleteExercise} key={exercises[i]._id}/>)
+    }
+    return exerList
   }
 
   render() {
     return (
       <div>
-        <h3>Logged Exercises</h3>
+        <h3>Exercise Log</h3>
         <table className="table">
           <thead className="thead-light">
             <tr>

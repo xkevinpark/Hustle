@@ -1,12 +1,13 @@
 const webpack = require('webpack');
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin'); 
+const path = require('path'); 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); 
 
 module.exports = {
-  entry: './frontend/index.js',
+  entry: path.resolve(__dirname, './frontend/index.js'),
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
   },
   mode: process.env.NODE_ENV,
@@ -23,31 +24,43 @@ module.exports = {
         }
       }, 
       {
-        test: /\.s?css$/,
+        test: /.(css|scss)$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-      }
-    ]
-  },
-  resolve: {
-    extensions: ['*', '.js', '.jsx', '.css'],
+        use: [          
+          // Creates 'style' nodes from JS strings
+          "style-loader",
+          // Translates CSS into CommonJS
+          "css-loader",
+          // Compiles Sass to CSS
+          "sass-loader",
+        ]
+      },
+    ],
   },
   performance: {
     hints: false,
   },
+  resolve: {
+    extensions: ['*', '.js', '.jsx', '.css'],
+  },
   plugins: [
     new webpack.HotModuleReplacementPlugin(), 
-    new MiniCssExtractPlugin(),
+    // new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin()
   ],
+  // devServer: {
+  //   publicPath: '/build',
+  //   contentBase: path.resolve(__dirname, './dist'),
+  //   compress: true,
+  //   port: 8080,
+  //   hot: true,
+  // },
   devServer: {
-    // contentBase: path.resolve(__dirname, './dist'),
+    publicPath: '/build',
     compress: true,
     port: 8080,
-    publicPath: '/dist',
-    hot: true,
-    // proxy: {
-    //   '/': 'http://localhost:3000'
-    // }
-  },
-};
+    proxy: {
+      '/': 'http://localhost:3000/'
+    }
+  }
+}

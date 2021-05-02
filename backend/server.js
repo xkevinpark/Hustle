@@ -6,15 +6,19 @@ const path = require('path');
 require('dotenv').config({path: 'backend/.env' })
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // cors middleware 
 app.use(cors());
 // for parsing json
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 // serve up html file
-app.use(express.static(path.resolve(__dirname, './crud-app/dist/index.html')));
+// app.use('/static', express.static(__dirname, '/frontend/'));
+app.get('/', function(request, response) {
+  response.sendFile(path.resolve(__dirname, "../index.html"));
+});
 
 // database URI
 const uri = process.env.ATLAS_URI;
